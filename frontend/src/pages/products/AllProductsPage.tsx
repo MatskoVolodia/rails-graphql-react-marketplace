@@ -1,28 +1,12 @@
-import { gql, useQuery } from "@apollo/client";
-import React, { useState } from "react";
-import { withProvider } from "../../adapters/graphqlProvider";
-
-const productsQuery = gql`
-  query allProducts {
-    products {
-      title
-      price
-    }
-  }
-`;
+import React from "react";
+import ProductsList from "../../components/products/ProductsList";
 
 const AllProductsPage: React.FunctionComponent = () => {
-  const { data, loading, error } = useQuery(productsQuery);
-
-  if (error) {
-    return <div>{error.message}</div>;
-  }
-
   return (
-    <div>
-      {loading ? "Loading.." : data.products.map((meetup: any) => meetup.title)}
-    </div>
+    <>
+      <ProductsList />
+    </>
   );
 };
 
-export default withProvider(AllProductsPage);
+export default AllProductsPage;
