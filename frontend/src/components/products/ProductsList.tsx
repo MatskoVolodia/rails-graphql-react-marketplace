@@ -1,19 +1,25 @@
 import { gql, useQuery } from "@apollo/client";
-import { withProvider } from "../../adapters/graphqlProvider";
-import { Product } from "../../types";
+import { Category, Product } from "../../types";
 import ProductItem from "./ProductItem";
 
 const productsQuery = gql`
-  query allProducts {
-    products {
+  query getProducts($categoryId: ID) {
+    products(categoryId: $categoryId) {
+      id
       title
       price
     }
   }
 `;
 
-const ProductsList: React.FunctionComponent = () => {
-  const { data, loading, error } = useQuery(productsQuery);
+export interface ProductsListProps {
+  categoryId?: any;
+}
+
+const ProductsList: React.FC<ProductsListProps> = ({ categoryId }) => {
+  const { data, loading, error } = useQuery(productsQuery, {
+    variables: { categoryId: categoryId },
+  });
 
   if (error) {
     return <div>{error.message}</div>;
@@ -24,10 +30,10 @@ const ProductsList: React.FunctionComponent = () => {
       {loading
         ? "Loading.."
         : data.products.map((product: Product) => (
-            <ProductItem product={product} />
+            <ProductItem key={product.id} product={product} />
           ))}
     </div>
   );
 };
 
-export default withProvider(ProductsList);
+export default ProductsList;

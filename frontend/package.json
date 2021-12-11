@@ -20,7 +20,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "gql:codegen": "graphql-codegen --config codegen.yml"
+    "gql:codegen": "graphql-codegen --config codegen.yml",
+    "gql:sync": "rake graphql:schema:dump && yarn gql:codegen"
   },
   "eslintConfig": {
     "extends": [

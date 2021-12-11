@@ -17,6 +17,16 @@ export type Scalars = {
   ISO8601DateTime: any;
 };
 
+export type Category = {
+  __typename?: 'Category';
+  childCategories?: Maybe<Array<Category>>;
+  createdAt: Scalars['ISO8601DateTime'];
+  id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+  parentCategoryId?: Maybe<Scalars['Int']>;
+  updatedAt: Scalars['ISO8601DateTime'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   /** An example field added by the generator */
@@ -25,6 +35,7 @@ export type Mutation = {
 
 export type Product = {
   __typename?: 'Product';
+  category?: Maybe<Category>;
   createdAt: Scalars['ISO8601DateTime'];
   id: Scalars['ID'];
   price?: Maybe<Scalars['Float']>;
@@ -34,6 +45,8 @@ export type Product = {
 
 export type Query = {
   __typename?: 'Query';
+  /** Categories field */
+  categories: Array<Category>;
   /** Products field */
   products: Array<Product>;
 };

@@ -1,3 +1,12 @@
+type Category {
+  childCategories: [Category!]
+  createdAt: ISO8601DateTime!
+  id: ID!
+  name: String
+  parentCategoryId: Int
+  updatedAt: ISO8601DateTime!
+}
+
 """
 An ISO 8601-encoded datetime
 """
@@ -11,6 +20,7 @@ type Mutation {
 }
 
 type Product {
+  category: Category
   createdAt: ISO8601DateTime!
   id: ID!
   price: Float
@@ -19,6 +29,11 @@ type Product {
 }
 
 type Query {
+  """
+  Categories field
+  """
+  categories: [Category!]!
+
   """
   Products field
   """

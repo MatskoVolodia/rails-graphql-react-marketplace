@@ -59,3 +59,5 @@ gem "graphql", "~> 1.13"
 gem 'graphiql-rails', group: :development
 
 gem "rack-cors", "~> 1.1"
+
+gem "search_object_graphql", "~> 1.0"

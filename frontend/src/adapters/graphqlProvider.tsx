@@ -27,12 +27,10 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-export const withProvider =
-  (WrappedComponent: React.ComponentType, props: any = {}) =>
-  () => {
-    return (
-      <ApolloProvider client={client}>
-        <WrappedComponent {...props} />
-      </ApolloProvider>
-    );
-  };
+export interface WithProviderProps {
+  children: any;
+}
+
+export const WithProvider: React.FC<WithProviderProps> = ({ children }) => {
+  return <ApolloProvider client={client}>{children}</ApolloProvider>;
+};
