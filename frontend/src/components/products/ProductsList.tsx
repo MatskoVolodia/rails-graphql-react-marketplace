@@ -1,6 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { Category, Product } from "../../types";
-import ProductItem from "./ProductItem";
+import CategoriesBreadcrumbs from "../categories/CategoriesBreadcrumbs";
+import ProductCard from "./ProductCard";
 
 const productsQuery = gql`
   query getProducts($categoryId: ID) {
@@ -13,12 +14,12 @@ const productsQuery = gql`
 `;
 
 export interface ProductsListProps {
-  categoryId?: any;
+  category: Category;
 }
 
-const ProductsList: React.FC<ProductsListProps> = ({ categoryId }) => {
+const ProductsList: React.FC<ProductsListProps> = ({ category }) => {
   const { data, loading, error } = useQuery(productsQuery, {
-    variables: { categoryId: categoryId },
+    variables: { categoryId: category.id },
   });
 
   if (error) {
@@ -30,7 +31,7 @@ const ProductsList: React.FC<ProductsListProps> = ({ categoryId }) => {
       {loading
         ? "Loading.."
         : data.products.map((product: Product) => (
-            <ProductItem key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} />
           ))}
     </div>
   );

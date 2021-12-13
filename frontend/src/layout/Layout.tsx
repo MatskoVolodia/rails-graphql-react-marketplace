@@ -1,4 +1,5 @@
-import CategoriesList from "../components/menu/CategoriesMenu";
+import { Grid } from "@mui/material";
+import CategoriesList from "../components/categories/CategoriesMenu";
 import MainHeader from "./MainHeader";
 
 export interface LayoutProps {
@@ -7,17 +8,16 @@ export interface LayoutProps {
 
 const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
   return (
-    <div>
-      <MainHeader />
-      <div>
-        <div>
-          <CategoriesList />
-        </div>
-        <div>
+    <>
+      <Grid container spacing={2}>
+        <Grid item md={12}>
+          <MainHeader />
+        </Grid>
+        <Grid item md={12}>
           <main>{children}</main>
-        </div>
-      </div>
-    </div>
+        </Grid>
+      </Grid>
+    </>
   );
 };
 
