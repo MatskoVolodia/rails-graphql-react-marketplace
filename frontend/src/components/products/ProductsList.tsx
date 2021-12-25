@@ -1,6 +1,10 @@
 import { gql, useQuery } from "@apollo/client";
+import { Container, Grid, Stack } from "@mui/material";
+import { useState } from "react";
 import { Category, Product } from "../../types";
 import CategoriesBreadcrumbs from "../categories/CategoriesBreadcrumbs";
+import CreateProductCard from "./CreateProductCard";
+import PendingProductCard from "./PendingProductCard";
 import ProductCard from "./ProductCard";
 
 const productsQuery = gql`
@@ -22,18 +26,31 @@ const ProductsList: React.FC<ProductsListProps> = ({ category }) => {
     variables: { categoryId: category.id },
   });
 
+  const [pendingProduct, setPendingProduct] = useState(false);
+
+  const createProductHandler = () => {
+    setPendingProduct(true);
+  };
+
   if (error) {
     return <div>{error.message}</div>;
   }
 
+  if (loading) {
+    return <div>Loading..</div>;
+  }
+
   return (
-    <div>
-      {loading
-        ? "Loading.."
-        : data.products.map((product: Product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-    </div>
+    <Stack spacing={2} direction="row">
+      {data.products.map((product: Product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+      {pendingProduct && <PendingProductCard />}
+      <CreateProductCard
+        category={category}
+        createProductHandler={createProductHandler}
+      />
+    </Stack>
   );
 };
 
